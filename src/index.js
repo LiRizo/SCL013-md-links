@@ -7,15 +7,6 @@ const fetch = require ("fetch");
 const fetchUrl = fetch.fetchUrl;
 const colors = require('colors');
 
-/* const options = (file) => {
-  console.log("veamos", file)
-
-  let validate = false;
-  let stats = false;
-validate = file.includes("--validate");
-stats = file.includes("--stats");
-console.log('probando', validate)
-} */
 //1. Función de entrada
 const mdLinks = (file, arguments = []) => {
   if ((arguments.includes('--stats') && arguments.includes('--validate')) || arguments.includes('-s') && arguments.includes('-v')) {
@@ -38,7 +29,7 @@ const mdLinks = (file, arguments = []) => {
 
 //Función que lee el archivo
 const getMd = (file, options = {validate: false, stats: false}) => {
-  console.log('probando', validate)
+ console.log('probando', validate)
   return new Promise((resolve, reject) => {
     fs.readFile(file, 'utf8', (err, file) => {
       if (err) {
@@ -48,6 +39,10 @@ const getMd = (file, options = {validate: false, stats: false}) => {
       }
     })
   })
+  .then(res => {
+    res.expReg( file, options);
+  })
+  .catch(err => console.log(err))
 }
 
 //Función que lee los links de la ruta espeficificada
@@ -69,22 +64,37 @@ fs.readFile(file, "utf-8", (err,file) => {
       })
     })
   }
+  let checkedOptions = checkOptions(options);
+if (checkedOptions === "stats") {
+  console.log("funcion stats");
+}
   return arrLinks;
 });
+const checkOptions = (options) => {
+  if (options.validate === true && options.stats === true) {
+    getStatus(url);
+    urlStats(linkObjects);
+  } else if (options.validate === true) {
+    getStatus(url);
+  } else if (options.stats === true) {
+    urlStats(linkObjects)
+  } else {
+  // instantiate
+  const table = new Table({
+  head: [colors.green('TEXTO'), colors.green('LINK')] , colWidths: [50, 75]
+  });
+  }
+   }
 
-if (options.validate === true && options.stats === true) {
-  getStatus(url);
-  urlStats(linkObjects);
-} else if (options.validate === true) {
-  getStatus(url);
-} else if (options.stats === true) {
-  urlStats(linkObjects)
-} else {
-// instantiate
-const table = new Table({
-head: [colors.green('TEXTO'), colors.green('LINK')] , colWidths: [50, 75]
-});
-}
+
+ /*  console.log("veamos", options)
+
+  let validate = false;
+  let stats = false;
+validate = options.includes("--validate");
+stats = options.includes("--stats");
+console.log('probando', validate)
+ */
 
 const getStatus = (url) => {
   return new Promise ((resolve, reject) => {
@@ -98,18 +108,30 @@ const getStatus = (url) => {
   });
 };
 
-//4b. Estadísticas
-const urlStats = (links) => {
-  const href = links.map(link => link.href)
-  let resultMd = md.render(href.toString());
-  let link = resultMd.split(',');
-  let totalLinks = 0;
-   link.forEach(element => {
-    if (element.includes('md')) {
-      totalLinks = totalLinks + 1;
-    }
-  });
-    }
+    const urlStats = (path) => {
+      path.forEach((element) => {
+        fs.readFile(element, "utf8", (err, file) => {
+          let statusLinks = file.match(expReg);
+          for (let i = 0; i < statusLinks.length; i++) {
+            fetch(statusLinks[i])
+              .then((response) => {
+                if (response.status === 200) ok++;
+                return response;
+              })
+              .then((response) => {
+                if (response.status !== 200) broken++;
+                return response;
+              })
+              .then(() => {
+                if (ok + broken === statusLinks.length)
+                  console.log(
+                    ` ✔ Total : ${statusLinks.length}\n ✔ Unique : ${ok}\n ✖ Broken : ${broken}`
+                  );
+              });
+          }
+        });
+      });
+    };
 
     module.exports = {
       getMd: getMd,
