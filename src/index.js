@@ -82,10 +82,11 @@ const getStatus = (url) => {
     })
   });
 };
+
 console.log(`                                                                   `)
 console.log(chalk.yellowBright(`▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪`));
 console.log(`                                                                   `)
-console.log(chalk.yellowBright('Linda'), 'y', chalk.yellowBright('Rosario'));
+console.log(chalk.yellowBright('Linda Rizo'), 'y', chalk.yellowBright('Rosario Wrobel'));
 console.log(`                                                                   `)
 console.log(chalk.yellowBright(`▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪`));
 console.log(`                                                                   `)
