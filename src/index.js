@@ -1,16 +1,17 @@
 const fs = require("fs");//Nos permite acceder al sistema de archivos, viene incorporado en node
 let file = process.argv[2];//Toma lo que se le da desde consola
 //const axios = require ('axios');//librería para hacer solicitudes HTTP
-const fetch1 = require("node-fetch");
+const fetch1 = require("node-fetch");// libreria para manipurar el canal http
 const chalk = require('chalk');
 const fetch = require("fetch");
 const fetchUrl = fetch.fetchUrl;
+
 //Función que lee el archivo
 const getMd = (file) => {
   return new Promise((resolve, reject) => {
     fs.readFile(file, 'utf8', (err, file) => {
       if (err) {
-        return reject(err)
+        reject(err)
       } else {
         resolve(file)
       }
@@ -60,11 +61,16 @@ fs.readFile(file, "utf-8", (err, file) => {
           console.log(err);
         })
     })
+    console.log(`                                                                   `)
+    console.log(chalk.yellowBright(`▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪`));
+    console.log(`                                                                   `)
     urlStats(links);
     //console.log("Esto es lo que tiene el .md seleccionado", file);
   }
 
 });
+
+//validar
 const getStatus = (url) => {
   return new Promise((resolve, reject) => {
     fetchUrl(url, (error, meta) => {
@@ -76,7 +82,11 @@ const getStatus = (url) => {
     })
   });
 };
-
+console.log(`                                                                   `)
+console.log(chalk.yellowBright(`▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪`));
+console.log(`                                                                   `)
 console.log(chalk.yellowBright('Linda'), 'y', chalk.yellowBright('Rosario'));
-
+console.log(`                                                                   `)
+console.log(chalk.yellowBright(`▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪▪`));
+console.log(`                                                                   `)
 
